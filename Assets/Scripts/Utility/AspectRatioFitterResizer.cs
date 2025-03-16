@@ -1,22 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 [ExecuteAlways]
 public class AspectRatioFitterResizer : MonoBehaviour
 {
     [SerializeField] private AspectRatioFitter aspectRatioFitter;
 
-    // Predefined screen width and aspect ratio values
-    private float screenWidth_1920 = 1920f;
-    private float aspectRatio_1920 = 5.37f;
+    [Header("Aspect Ratio Configuration")]
+    [SerializeField] private List<AspectRatioValue> aspectRatioValues = new List<AspectRatioValue>();
 
-    private float screenWidth_2560 = 2560f;
-    private float aspectRatio_2560 = 7.29f;
-
-    private float screenWidth_1600 = 1600f;
-    private float aspectRatio_1600 = 4.56f;
-
-    private float lastScreenWidth = -1f;
+    private float lastAspectRatio = -1f;
 
     private void Start()
     {
@@ -43,45 +37,68 @@ public class AspectRatioFitterResizer : MonoBehaviour
             return;
         }
 
-        // Only update when the mode is FitInParent
-        if (aspectRatioFitter.aspectMode != AspectRatioFitter.AspectMode.FitInParent)
+        float currentAspectRatio = (float)Screen.width / Screen.height;
+
+        // Only update if aspect ratio has changed
+        if (Mathf.Abs(currentAspectRatio - lastAspectRatio) > 0.001f)
         {
-            return;
-        }
+            float newAspectRatio = InterpolateAspectRatio(currentAspectRatio);
 
-        float currentScreenWidth = Screen.width;
+            // Apply aspect ratio only for FitInParent or WidthControlsHeight modes
+            if (aspectRatioFitter.aspectMode == AspectRatioFitter.AspectMode.FitInParent ||
+                aspectRatioFitter.aspectMode == AspectRatioFitter.AspectMode.WidthControlsHeight)
+            {
+                aspectRatioFitter.aspectRatio = newAspectRatio;
+                Debug.Log($"[AspectRatioFitterResizer] Applied Aspect Ratio: {newAspectRatio} for Screen Aspect: {currentAspectRatio}, Mode: {aspectRatioFitter.aspectMode}");
+            }
 
-        // Only update if screen width has changed to avoid unnecessary calculations
-        if (Mathf.Abs(currentScreenWidth - lastScreenWidth) > 1f)
-        {
-            float newAspectRatio = InterpolateAspectRatio(currentScreenWidth);
-
-            // Apply new aspect ratio
-            aspectRatioFitter.aspectRatio = newAspectRatio;
-
-            lastScreenWidth = currentScreenWidth;
-
-            Debug.Log($"[AspectRatioFitterResizer] Applied Aspect Ratio: {newAspectRatio} for Screen Width: {currentScreenWidth}");
+            lastAspectRatio = currentAspectRatio;
         }
     }
 
-    private float InterpolateAspectRatio(float screenWidth)
+    private float InterpolateAspectRatio(float screenAspectRatio)
     {
-        if (screenWidth <= screenWidth_1600)
+        if (aspectRatioValues == null || aspectRatioValues.Count == 0)
         {
-            return aspectRatio_1600;
+            Debug.LogWarning("[AspectRatioFitterResizer] No aspect ratio data provided.");
+            return 1f; // Default aspect ratio
         }
-        else if (screenWidth >= screenWidth_2560)
+
+        // Sort list to ensure values are in order
+        aspectRatioValues.Sort((a, b) => a.AspectRatio.CompareTo(b.AspectRatio));
+
+        // If screen aspect ratio is below or equal to the lowest Value, return the lowest
+        if (screenAspectRatio <= aspectRatioValues[0].AspectRatio)
         {
-            return aspectRatio_2560;
+            return aspectRatioValues[0].Value;
         }
-        else if (screenWidth <= screenWidth_1920)
+
+        // If screen aspect ratio is above or equal to the highest Value, return the highest
+        if (screenAspectRatio >= aspectRatioValues[aspectRatioValues.Count - 1].AspectRatio)
         {
-            return Mathf.Lerp(aspectRatio_1600, aspectRatio_1920, Mathf.InverseLerp(screenWidth_1600, screenWidth_1920, screenWidth));
+            return aspectRatioValues[aspectRatioValues.Count - 1].Value;
         }
-        else
+
+        // Find two closest values and interpolate
+        for (int i = 0; i < aspectRatioValues.Count - 1; i++)
         {
-            return Mathf.Lerp(aspectRatio_1920, aspectRatio_2560, Mathf.InverseLerp(screenWidth_1920, screenWidth_2560, screenWidth));
+            if (screenAspectRatio >= aspectRatioValues[i].AspectRatio && screenAspectRatio <= aspectRatioValues[i + 1].AspectRatio)
+            {
+                return Mathf.Lerp(
+                    aspectRatioValues[i].Value,
+                    aspectRatioValues[i + 1].Value,
+                    Mathf.InverseLerp(aspectRatioValues[i].AspectRatio, aspectRatioValues[i + 1].AspectRatio, screenAspectRatio)
+                );
+            }
         }
+
+        return 1f; // Fallback
     }
+}
+
+[System.Serializable]
+public class AspectRatioValue
+{
+    public float AspectRatio; // Stores predefined aspect ratio values (e.g., 16f / 9f, 21f / 9f)
+    public float Value; // The corresponding aspect ratio Value for the AspectRatioFitter
 }
