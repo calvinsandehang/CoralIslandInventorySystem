@@ -5,18 +5,10 @@ public class RootWrapperResizer : MonoBehaviour
 {
     [SerializeField] private RectTransform rootWrapper; // Assign in Inspector
 
-    [Header("Size Settings")]
-    [SerializeField] private Vector2 resolution_16_9 = new Vector2(1920f, 1080f);
-    [SerializeField] private Vector2 resolution_16_10 = new Vector2(1600f, 1000f);
-    [SerializeField] private Vector2 resolution_21_9 = new Vector2(2560f, 1080f);
-
-    private float[] predefinedAspectRatios = { 16f / 10f, 16f / 9f, 21f / 9f };
-    private Vector2[] resolutions;
-    private int lastIndex = -1;
+    private Vector2 lastResolution = Vector2.zero;
 
     private void Start()
     {
-        resolutions = new Vector2[] { resolution_16_10, resolution_16_9, resolution_21_9 };
         AdjustSize();
     }
 
@@ -28,7 +20,6 @@ public class RootWrapperResizer : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        resolutions = new Vector2[] { resolution_16_10, resolution_16_9, resolution_21_9 };
         AdjustSize();
     }
 #endif
@@ -41,46 +32,27 @@ public class RootWrapperResizer : MonoBehaviour
             return;
         }
 
-        float currentAspect = (float)Screen.width / Screen.height;
-        int closestIndex = FindClosestAspectRatio(currentAspect);
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
 
-        // Only apply changes if the aspect ratio actually changes
-        if (closestIndex != lastIndex)
+        // Only apply changes if the resolution actually changes
+        if (lastResolution.x != screenWidth || lastResolution.y != screenHeight)
         {
-            Vector2 newSize = resolutions[closestIndex];
-
-            // 🔥 Force Apply Width & Height
+            // 🔥 Force Apply Width & Height dynamically
             rootWrapper.anchorMin = new Vector2(0.5f, 0.5f);
             rootWrapper.anchorMax = new Vector2(0.5f, 0.5f);
             rootWrapper.pivot = new Vector2(0.5f, 0.5f);
 
-            rootWrapper.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newSize.x);
-            rootWrapper.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, newSize.y);
+            rootWrapper.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, screenWidth);
+            rootWrapper.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, screenHeight);
 
             // 🚨 Force Unity to refresh RectTransform updates
             rootWrapper.gameObject.SetActive(false);
             rootWrapper.gameObject.SetActive(true);
 
-            lastIndex = closestIndex;
+            lastResolution = new Vector2(screenWidth, screenHeight);
 
-            Debug.Log($"✅ [RootWrapperResizer] Applied Width: {newSize.x}, Height: {newSize.y}, Closest Aspect Ratio: {predefinedAspectRatios[closestIndex]}");
+            Debug.Log($"[RootWrapperResizer] Applied Width: {screenWidth}, Height: {screenHeight}");
         }
-    }
-
-    private int FindClosestAspectRatio(float aspect)
-    {
-        int closestIndex = 0;
-        float closestDifference = Mathf.Abs(predefinedAspectRatios[0] - aspect);
-
-        for (int i = 1; i < predefinedAspectRatios.Length; i++)
-        {
-            float difference = Mathf.Abs(predefinedAspectRatios[i] - aspect);
-            if (difference < closestDifference)
-            {
-                closestIndex = i;
-                closestDifference = difference;
-            }
-        }
-        return closestIndex;
     }
 }
