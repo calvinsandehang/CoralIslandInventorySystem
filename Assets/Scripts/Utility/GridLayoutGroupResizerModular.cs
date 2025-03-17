@@ -10,6 +10,7 @@ public class GridLayoutGroupResizerModular : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private bool adjustCellSize = false;
     [SerializeField] private bool adjustSpacing = false;
+    [SerializeField] private bool IsUsingConstraintCount = false; // New boolean
 
     [Header("Aspect Ratio Configuration")]
     [SerializeField] private List<AspectRatioGridData> gridDataValues = new List<AspectRatioGridData>();
@@ -48,6 +49,7 @@ public class GridLayoutGroupResizerModular : MonoBehaviour
         {
             Vector2 newCellSize = InterpolateCellSize(currentAspectRatio);
             Vector2 newSpacing = InterpolateSpacing(currentAspectRatio);
+            int newConstraintCount = InterpolateConstraintCount(currentAspectRatio);
 
             if (adjustCellSize)
             {
@@ -59,10 +61,16 @@ public class GridLayoutGroupResizerModular : MonoBehaviour
                 gridLayoutGroup.spacing = newSpacing;
             }
 
+            if (IsUsingConstraintCount)
+            {
+                gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+                gridLayoutGroup.constraintCount = newConstraintCount;
+            }
+
             LayoutRebuilder.ForceRebuildLayoutImmediate(gridLayoutGroup.transform as RectTransform);
             lastAspectRatio = currentAspectRatio;
 
-            Debug.Log($"[GridLayoutGroupResizer] Updated: CellSize: {gridLayoutGroup.cellSize}, Spacing: {gridLayoutGroup.spacing}, Aspect Ratio: {currentAspectRatio}");
+            Debug.Log($"[GridLayoutGroupResizer] Updated: CellSize: {gridLayoutGroup.cellSize}, Spacing: {gridLayoutGroup.spacing}, ConstraintCount: {gridLayoutGroup.constraintCount}, Aspect Ratio: {currentAspectRatio}");
         }
     }
 
@@ -74,6 +82,55 @@ public class GridLayoutGroupResizerModular : MonoBehaviour
     private Vector2 InterpolateSpacing(float screenAspectRatio)
     {
         return InterpolateGridData(screenAspectRatio, false);
+    }
+
+    private int InterpolateConstraintCount(float screenAspectRatio)
+    {
+        if (!IsUsingConstraintCount) return gridLayoutGroup.constraintCount;
+
+        if (gridDataValues == null || gridDataValues.Count == 0)
+        {
+            Debug.LogWarning("[GridLayoutGroupResizer] No aspect ratio values provided.");
+            return gridLayoutGroup.constraintCount;
+        }
+
+        // Sort list to ensure values are in order
+        gridDataValues.Sort((a, b) => a.AspectRatio.CompareTo(b.AspectRatio));
+
+        // If screen aspect ratio matches a predefined one, return the exact constraint count
+        foreach (var entry in gridDataValues)
+        {
+            if (Mathf.Abs(entry.AspectRatio - screenAspectRatio) < 0.01f)
+            {
+                return entry.ConstraintCount;
+            }
+        }
+
+        // If screen aspect ratio is below or above the predefined range, return min/max values
+        if (screenAspectRatio <= gridDataValues[0].AspectRatio)
+        {
+            return gridDataValues[0].ConstraintCount;
+        }
+
+        if (screenAspectRatio >= gridDataValues[gridDataValues.Count - 1].AspectRatio)
+        {
+            return gridDataValues[gridDataValues.Count - 1].ConstraintCount;
+        }
+
+        // Find two closest values and interpolate
+        for (int i = 0; i < gridDataValues.Count - 1; i++)
+        {
+            if (screenAspectRatio >= gridDataValues[i].AspectRatio && screenAspectRatio <= gridDataValues[i + 1].AspectRatio)
+            {
+                return Mathf.RoundToInt(Mathf.Lerp(
+                    gridDataValues[i].ConstraintCount,
+                    gridDataValues[i + 1].ConstraintCount,
+                    Mathf.InverseLerp(gridDataValues[i].AspectRatio, gridDataValues[i + 1].AspectRatio, screenAspectRatio)
+                ));
+            }
+        }
+
+        return gridLayoutGroup.constraintCount; // Fallback
     }
 
     private Vector2 InterpolateGridData(float screenAspectRatio, bool isCellSize)
@@ -128,4 +185,5 @@ public class AspectRatioGridData
     public float AspectRatio; // Stores predefined aspect ratio values (e.g., 16f / 9f, 21f / 9f)
     public Vector2 CellSize;  // The corresponding cell size for the GridLayout
     public Vector2 Spacing;   // The corresponding spacing (X and Y) for the GridLayout
+    public int ConstraintCount; // New: The corresponding column count for the GridLayout constraint
 }
