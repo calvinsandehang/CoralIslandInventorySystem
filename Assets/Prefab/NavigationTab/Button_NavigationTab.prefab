@@ -167,19 +167,21 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 0.101960786}
   hoverColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectedColor: {r: 0.89019614, g: 0.6862745, b: 0.4901961, a: 1}
-  buttonName: Crafting
+  buttonVisual: {fileID: 3737208924059103100}
+  frame: {fileID: 3816796050583677660}
+  targetAlpha: 0.4
+  panelPopUp: {fileID: 8813928502183992816}
+  tmpPopUp: {fileID: 7140158025867173150}
+  hoverSfx: SfxUI0
+  clickSfx: SfxUI1
+  navigationManager: {fileID: 0}
+  buttonName: Townhall
   tmpButtonName: {fileID: 3107764034747947293}
-  moveUpDistance: 15
+  panelButtonName: {fileID: 9048644132906629390}
+  moveUpDistance: 25
   animationDuration: 0.25
   moveUpEaseType: 1
   moveDownEaseType: 6
-  frame: {fileID: 3816796050583677660}
-  targetAlpha: 0.4
-  buttonVisual: {fileID: 3737208924059103100}
-  panelPopUp: {fileID: 8813928502183992816}
-  tmpPopUp: {fileID: 7140158025867173150}
-  IsSelected: 0
-  IsHovered: 0
 --- !u!1 &3125821431161568605
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,7 +561,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6044108350508319350}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -957,7 +959,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7172175948180109820
 RectTransform:
   m_ObjectHideFlags: 0

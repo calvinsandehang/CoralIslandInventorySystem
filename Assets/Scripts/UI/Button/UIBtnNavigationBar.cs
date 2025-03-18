@@ -1,184 +1,43 @@
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
 using DG.Tweening;
-using Sirenix.OdinInspector;
 
 namespace StairwayGames.CoralIsland.UI.ButtonSystem
 {
-    [RequireComponent(typeof(Button))]
-    public class UIBtnNavigationBar : MonoBehaviour, IPointerEnterHandler,
-    IPointerExitHandler, IPointerClickHandler, IButtonSfx, IButtonVfx, IButtonPopUpInfo
+    public class UIBtnNavigationBar : UINavigationButtonBase
     {
-        private Button button;
-        private Vector3 originalPosition;
-
-        [Header("Color Settings")]
-        [SerializeField] private Color normalColor = Color.white;
-        [SerializeField] private Color hoverColor = Color.gray;
-        [SerializeField] private Color selectedColor = Color.green;
-
-        [Header("Text Settings")]
-        [SerializeField] private string buttonName;
-        [SerializeField] private TextMeshProUGUI tmpButtonName;
-
         [Header("Animation Settings")]
         [SerializeField] private float moveUpDistance = 20f;
         [SerializeField] private float animationDuration = 0.3f;
-        [SerializeField] private Ease moveUpEaseType = Ease.OutBack; // Recommended: Overshoot effect
-        [SerializeField] private Ease moveDownEaseType = Ease.OutQuad; // Smooth movement down
+        [SerializeField] private Ease moveUpEaseType = Ease.OutBack;
+        [SerializeField] private Ease moveDownEaseType = Ease.OutQuad;
 
-        [Header("Vfx")]
-        [SerializeField] private Image frame; // Frame for visual effect
-        [SerializeField] private float targetAlpha = 0.4f;
-        [SerializeField] private Image buttonVisual;
+        private Vector3 originalPosition;
 
-        [Header("Pop Up")]
-        [SerializeField] private GameObject panelPopUp;
-        [SerializeField] private TextMeshProUGUI tmpPopUp;
-
-
-        public bool IsSelected = false;
-        public bool IsHovered = false;
-
-        public bool SelectedVfxActive => IsSelected;
-        public bool HoveredVfxActive => IsHovered;
-
-        public bool PopUpInfoActive => throw new System.NotImplementedException();
-
-        private void Awake()
+        protected override void Awake()
         {
-            button = GetComponent<Button>();
-
-            if (buttonVisual == null)
-            {
-                buttonVisual = GetComponent<Image>();
-            }
-
-            buttonVisual.color = normalColor;
-            tmpButtonName.text = buttonName;
-            tmpButtonName.enabled = false;
-
-            panelPopUp.SetActive(true);
-            tmpPopUp.text = buttonName;
-            panelPopUp.SetActive(false);
-
+            base.Awake();
             originalPosition = buttonVisual.rectTransform.localPosition;
-
-            // Initialize frame alpha to 0            
-            UIHelper.SetImageAlpha(frame, 0f);
         }
 
-        private void Start()
+        public override void SelectButton()
         {
-            ButtonNavigationBarManager.Instance.RegisterButton(this);
-
-            UIHelper.SetImageAlpha(buttonVisual, 0.1f);
+            base.SelectButton();
+            AnimateButton(true);
         }
-        #region Unity Event
-        public void OnPointerEnter(PointerEventData eventData)
+
+        public override void DeselectButton()
         {
-            IsHovered = true;
-            if (!IsSelected && button.interactable)
-            {
-                PlayHoverSfx();
-                ToggleHoveredVfx();
-                ToggleButtonPopUpInfo();
-            }
+            base.DeselectButton();
+            AnimateButton(false);
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        private void AnimateButton(bool isSelected)
         {
-            IsHovered = false;
-            if (!IsSelected)
-            {
-                buttonVisual.color = normalColor;
-                ToggleHoveredVfx();
-                ToggleButtonPopUpInfo();
-            }
+            buttonVisual.rectTransform.DOLocalMoveY(
+                isSelected ? originalPosition.y + moveUpDistance : originalPosition.y,
+                animationDuration
+            ).SetEase(isSelected ? moveUpEaseType : moveDownEaseType);
         }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (button.interactable)
-            {
-                ButtonNavigationBarManager.Instance.SelectButton(this);
-            }
-        }
-        #endregion
-        public void SelectButton()
-        {
-            IsHovered = false;
-            ToggleHoveredVfx();
-            ToggleButtonPopUpInfo();
-
-            PlayClickPositiveSfx();
-            IsSelected = true;
-            buttonVisual.color = selectedColor;
-            tmpButtonName.enabled = true;
-            ToggleSelectedVfx();
-        }
-
-        public void DeselectButton()
-        {
-            IsSelected = false;
-            buttonVisual.color = normalColor;
-            tmpButtonName.enabled = false;
-            ToggleSelectedVfx();
-
-            UIHelper.SetImageAlpha(buttonVisual, 0.1f);
-        }
-
-        #region Vfx        
-        [Button]
-        public void ToggleSelectedVfx()
-        {
-            if (IsSelected)
-            {
-                // Move button up with overshoot effect
-                buttonVisual.rectTransform.DOLocalMoveY(originalPosition.y + moveUpDistance, animationDuration)
-                    .SetEase(moveUpEaseType);
-            }
-            else
-            {
-                // Move button back down smoothly
-                buttonVisual.rectTransform.DOLocalMoveY(originalPosition.y, animationDuration)
-                    .SetEase(moveDownEaseType);
-            }
-        }
-
-        public void ToggleHoveredVfx()
-        {
-            float targetAlpha = IsHovered ? this.targetAlpha : 0f;
-            UIHelper.SetImageAlpha(frame, targetAlpha);
-        }
-        #endregion
-
-        #region Audio
-        public void PlayHoverSfx()
-        {
-            AudioSystemManager.Instance.PlaySfx(AudioDatabaseType.Gameplay, "SfxUI0", 0.4f);
-        }
-
-        public void PlayClickPositiveSfx()
-        {
-            AudioSystemManager.Instance.PlaySfx(AudioDatabaseType.Gameplay, "SfxUI1", 0.6f);
-        }
-
-        public void PlayClickNegativeSfx()
-        {
-            // Optional negative feedback sound
-        }
-        #endregion
-
-        #region PopUp
-
-
-        public void ToggleButtonPopUpInfo()
-        {
-            panelPopUp.SetActive(IsHovered);
-        }
-        #endregion
     }
 }

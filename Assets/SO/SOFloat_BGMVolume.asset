@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b826d378603f02b44abceec30e055498, type: 3}
   m_Name: SOFloat_BGMVolume
   m_EditorClassIdentifier: 
-  Value: 1
+  Value: 0

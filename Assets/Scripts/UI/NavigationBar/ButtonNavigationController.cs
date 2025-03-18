@@ -7,11 +7,12 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
     {
         [SerializeField] private Button buttonLeft; // Q Button
         [SerializeField] private Button buttonRight; // E Button
+        [SerializeField] private UINavigationButtonManager navigationManager;
 
         private void Start()
         {
-            buttonLeft.onClick.AddListener(NavigateLeft);
-            buttonRight.onClick.AddListener(NavigateRight);
+            if (buttonLeft != null) buttonLeft.onClick.AddListener(NavigateLeft);
+            if (buttonRight != null) buttonRight.onClick.AddListener(NavigateRight);
         }
 
         private void Update()
@@ -29,12 +30,26 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
 
         private void NavigateLeft()
         {
-            ButtonNavigationBarManager.Instance.NavigateLeft();
+            if (navigationManager != null)
+            {
+                navigationManager.NavigateLeft();
+            }
+            else
+            {
+                Debug.LogError("[ButtonNavigationController] Navigation Manager is not assigned!");
+            }
         }
 
         private void NavigateRight()
         {
-            ButtonNavigationBarManager.Instance.NavigateRight();
+            if (navigationManager != null)
+            {
+                navigationManager.NavigateRight();
+            }
+            else
+            {
+                Debug.LogError("[ButtonNavigationController] Navigation Manager is not assigned!");
+            }
         }
     }
 }

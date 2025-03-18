@@ -57,4 +57,32 @@ public static class UIHelper
             image.color = color;
         }
     }
+
+    /// <summary>
+    /// Swaps the sprite of an Image component with an optional transition effect.
+    /// </summary>
+    /// <param name="image">The Image component to modify.</param>
+    /// <param name="newSprite">The new sprite to set.</param>
+    /// <param name="useTransition">Whether to fade out and in during the swap.</param>
+    /// <param name="duration">The duration of the transition.</param>
+    public static void SwapImageSprite(Image image, Sprite newSprite, bool useTransition = false, float duration = 0.3f)
+    {
+        if (image == null || newSprite == null) return;
+
+        if (useTransition)
+        {
+            // Fade out, swap sprite, then fade in
+            image.DOFade(0f, duration / 2).OnComplete(() =>
+            {
+                image.sprite = newSprite;
+                image.DOFade(1f, duration / 2);
+            });
+        }
+        else
+        {
+            // Instantly swap the sprite
+            image.sprite = newSprite;
+        }
+    }
+
 }
