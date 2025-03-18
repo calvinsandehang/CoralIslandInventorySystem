@@ -113,10 +113,10 @@ TextureImporter:
       name: Untitled design (10)_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 7
-        width: 42
-        height: 44
+        x: 25
+        y: 75
+        width: 57
+        height: 73
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,10 +134,10 @@ TextureImporter:
       name: Untitled design (10)_1
       rect:
         serializedVersion: 2
-        x: 90
-        y: 7
-        width: 42
-        height: 42
+        x: 106
+        y: 79
+        width: 63
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,10 +155,10 @@ TextureImporter:
       name: Untitled design (10)_2
       rect:
         serializedVersion: 2
-        x: 150
-        y: 11
-        width: 42
-        height: 43
+        x: 189
+        y: 79
+        width: 62
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,10 +176,10 @@ TextureImporter:
       name: Untitled design (10)_3
       rect:
         serializedVersion: 2
-        x: 227
-        y: 10
+        x: 11
+        y: 7
         width: 42
-        height: 43
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,10 +197,10 @@ TextureImporter:
       name: Untitled design (10)_4
       rect:
         serializedVersion: 2
-        x: 305
-        y: 11
-        width: 41
-        height: 43
+        x: 90
+        y: 7
+        width: 42
+        height: 42
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,10 +218,10 @@ TextureImporter:
       name: Untitled design (10)_5
       rect:
         serializedVersion: 2
-        x: 382
-        y: 10
-        width: 40
-        height: 44
+        x: 150
+        y: 11
+        width: 42
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -239,10 +239,10 @@ TextureImporter:
       name: Untitled design (10)_6
       rect:
         serializedVersion: 2
-        x: 439
-        y: 19
-        width: 22
-        height: 24
+        x: 227
+        y: 10
+        width: 42
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -260,6 +260,69 @@ TextureImporter:
       name: Untitled design (10)_7
       rect:
         serializedVersion: 2
+        x: 305
+        y: 11
+        width: 41
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 382de89aa86bff94b8a11f138fbe5255
+      internalID: -524621278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Untitled design (10)_8
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 10
+        width: 40
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7fdacae8c379e748b2814c66564b23f
+      internalID: 982154189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Untitled design (10)_9
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 19
+        width: 22
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7e2bd6fbf9f1d74a8f1aef57b651ffb
+      internalID: 1308443729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Untitled design (10)_10
+      rect:
+        serializedVersion: 2
         x: 479
         y: 19
         width: 21
@@ -271,8 +334,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 382de89aa86bff94b8a11f138fbe5255
-      internalID: -524621278
+      spriteID: 1c5d6a7979d737b499dbb7b7e0f3b0e7
+      internalID: -1337921919
       vertices: []
       indices: 
       edges: []
@@ -290,12 +353,15 @@ TextureImporter:
     nameFileIdTable:
       Untitled design (10)_0: -1014421563
       Untitled design (10)_1: -1745951807
+      Untitled design (10)_10: -1337921919
       Untitled design (10)_2: 199557161
       Untitled design (10)_3: 2014860693
       Untitled design (10)_4: 407051027
       Untitled design (10)_5: 851143484
       Untitled design (10)_6: 1891028104
       Untitled design (10)_7: -524621278
+      Untitled design (10)_8: 982154189
+      Untitled design (10)_9: 1308443729
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
