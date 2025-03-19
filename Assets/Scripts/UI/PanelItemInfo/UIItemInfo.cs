@@ -25,7 +25,8 @@ public class UIItemInfo : MonoBehaviour, ISubscriber
     [SerializeField] private Color flashingColor = Color.red; // Choose the flashing color
     [SerializeField] private float flashingDuration = 2f; // Duration of flashing effect
     [SerializeField] private float flashingFrequency = 0.3f; // Frequency of flashing
-
+    [Header("Depedency")]
+    [SerializeField] private PanelItemInfo panelItemInfo;
     private Coroutine flashingCoroutine;
     private Color originalColor;
 
@@ -166,6 +167,7 @@ public class UIItemInfo : MonoBehaviour, ISubscriber
         if (!recipeSO.IsCraftable)
         {
             VfxFlashingRed();
+            CoralIslandEvent.OnFailCraft?.Invoke();
         }
     }
     #endregion
@@ -187,6 +189,7 @@ public class UIItemInfo : MonoBehaviour, ISubscriber
 
         originalColor = flashingImage.color;
         flashingCoroutine = StartCoroutine(FlashingEffectCoroutine());
+        panelItemInfo.ShakePanel();
     }
 
     private IEnumerator FlashingEffectCoroutine()

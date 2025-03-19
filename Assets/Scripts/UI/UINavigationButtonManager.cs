@@ -1,15 +1,20 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace StairwayGames.CoralIsland.UI.ButtonSystem
 {
     public class UINavigationButtonManager : MonoBehaviour
     {
         [SerializeField] private List<UISelectableButtonBase> navigationButtons = new List<UISelectableButtonBase>();
+        [SerializeField] private List<NavigationTypeCanvasGroupPair> navigationCanvasGroups = new List<NavigationTypeCanvasGroupPair>();
+
         private UISelectableButtonBase selectedButton;
         [SerializeField] private int initialIndex = 0;
-        int currentIndex = 0;
+        private int currentIndex = 0;
+        [SerializeField] private float fadeDuration = 0.5f; // Duration for smooth transitions
+
         private void Start()
         {
             currentIndex = initialIndex;
@@ -38,6 +43,28 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
 
             selectedButton = button;
             selectedButton.SelectButton();
+
+            // Try to find and activate the corresponding canvas groups
+            if (selectedButton.TryGetComponent(out UINavigationButtonBase navButton))
+            {
+                ActivateCanvasGroups(navButton.NavigationType);
+            }
+        }
+
+        private void ActivateCanvasGroups(NavigationType type)
+        {
+            foreach (var pair in navigationCanvasGroups)
+            {
+                bool isTarget = pair.NavigationType == type;
+
+                foreach (var canvasGroup in pair.CanvasGroups)
+                {
+                    if (canvasGroup == null) continue;
+
+                    // Use UIHelper to gradually fade in the selected CanvasGroups and fade out the others
+                    UIHelper.ToggleCanvasGroup(canvasGroup, isTarget, useTransition: true, duration: fadeDuration);
+                }
+            }
         }
 
         public void NavigateLeft()
@@ -60,9 +87,7 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
 
         internal bool CheckActiveButton(UINavigationButtonBase uINavigationButtonBase)
         {
-            if (uINavigationButtonBase == selectedButton) return true;
-
-            return false;
+            return uINavigationButtonBase == selectedButton;
         }
     }
 }

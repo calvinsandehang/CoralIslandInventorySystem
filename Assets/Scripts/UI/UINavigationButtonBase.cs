@@ -18,6 +18,8 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
         [SerializeField] private float offsetX;
         [SerializeField] private float offsetY;
 
+        public NavigationType NavigationType;
+
         protected override void Awake()
         {
             base.Awake();

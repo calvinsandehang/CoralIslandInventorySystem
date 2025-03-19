@@ -85,4 +85,35 @@ public static class UIHelper
         }
     }
 
+    /// <summary>
+    /// Shakes a RectTransform with configurable strength and resets its position.
+    /// </summary>
+    public static void Shake(RectTransform rectTransform, float duration, float strength, int vibrato, float randomness)
+    {
+        if (rectTransform == null) return;
+
+        Vector3 originalPosition = rectTransform.anchoredPosition;
+        rectTransform.DOKill(); // Stop any existing shake animation
+
+        rectTransform.DOShakeAnchorPos(duration, strength, vibrato, randomness)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() => rectTransform.anchoredPosition = originalPosition);
+    }
+
+    /// <summary>
+    /// Flashes an Image component between a given color and its original color.
+    /// </summary>
+    public static void FlashColor(Image image, Color flashColor, float duration, float frequency)
+    {
+        if (image == null) return;
+
+        Color originalColor = image.color;
+        image.DOKill(); // Stop existing flash effect
+
+        Sequence flashSequence = DOTween.Sequence();
+        flashSequence.Append(image.DOColor(flashColor, frequency))
+                     .Append(image.DOColor(originalColor, frequency))
+                     .SetLoops((int)(duration / (frequency * 2)), LoopType.Yoyo);
+    }
+
 }

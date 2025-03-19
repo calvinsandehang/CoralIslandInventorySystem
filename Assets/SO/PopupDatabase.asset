@@ -16,7 +16,7 @@ MonoBehaviour:
   - popupType: 0
     popupPrefab: {fileID: 663458832747983218, guid: 9580148885bdcad4c837f7a948330054, type: 3}
   - popupType: 1
-    popupPrefab: {fileID: 0}
+    popupPrefab: {fileID: 7796711124724496469, guid: c909aeaf5ae2def40a5edf177e58a506, type: 3}
   - popupType: 2
     popupPrefab: {fileID: 0}
   - popupType: 3
