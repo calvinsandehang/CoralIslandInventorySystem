@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcd0bfc67b195cb4586258447e710d66, type: 3}
+  m_Name: Recipe_Undiscovered_artisan
+  m_EditorClassIdentifier: 
+  itemName: 
+  itemSprite: {fileID: 0}
+  itemDescription: 
+  category: 1
+  itemRequirements: []
+  undiscoveredSprite: {fileID: 21300000, guid: 92aa5361c7a114ca99e4564810f88214, type: 3}
+  isCraftable: 0
+  isDiscovered: 0

@@ -32,10 +32,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5626019696229266065}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 207.35834, y: -39}
-  m_SizeDelta: {x: 82.94334, y: 78}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4446514859397661494
 CanvasRenderer:
@@ -316,10 +316,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5626019696229266065}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 41.47167, y: -39}
-  m_SizeDelta: {x: 82.94334, y: 78}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6315796888596916896
 CanvasRenderer:
@@ -617,6 +617,7 @@ MonoBehaviour:
   buttonName: All
   tmpButtonName: {fileID: 7702065103592649622}
   panelButtonName: {fileID: 6656895350512765596}
+  recipeCategory: 0
 --- !u!114 &756419652652615891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -979,10 +980,10 @@ RectTransform:
   - {fileID: 1770627422111579701}
   m_Father: {fileID: 5626019696229266065}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 124.41501, y: -39}
-  m_SizeDelta: {x: 82.94334, y: 78}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8281768735673024396
 GameObject:

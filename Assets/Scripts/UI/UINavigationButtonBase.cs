@@ -6,7 +6,7 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
     public abstract class UINavigationButtonBase : UISelectableButtonBase
     {
         [Header("Navigation Manager Reference")]
-        [SerializeField] private UINavigationButtonManager navigationManager;
+        [SerializeField] protected UINavigationButtonManager navigationManager;
 
         [SerializeField] private string buttonName;
         [SerializeField] private TextMeshProUGUI tmpButtonName;

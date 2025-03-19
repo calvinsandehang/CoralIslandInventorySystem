@@ -6,7 +6,7 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
 {
     public class UIBtnRecipeCategory : UINavigationButtonBase
     {
-        //[SerializeField] private GameObject panelButtonName;
+        [SerializeField] private RecipeCategory recipeCategory;
         protected override void Awake()
         {
             base.Awake();
@@ -22,7 +22,8 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
         public override void SelectButton()
         {
             base.SelectButton();
-            //panelButtonName.SetActive(true);
+            CoralIslandEvent.OnChangeRecipeCategory(recipeCategory);
+
         }
 
         public override void DeselectButton()

@@ -8,4 +8,6 @@ public static class CoralIslandEvent
     public static Action<bool> OnToggleSfxSound;
     public static Action<float> OnOnSfxVolumeChanged;
     public static Action<AudioClip> OnStopSfx;
+
+    public static Action<RecipeCategory> OnChangeRecipeCategory;
 }
