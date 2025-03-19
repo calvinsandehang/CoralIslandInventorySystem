@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Bronze bar
   itemSprite: {fileID: 1878988368, guid: 0583ced693170af4d8cbd72b8b97cc08, type: 3}
   itemDescription: A bar of bronze.
-  amount: 5
+  amount: 2

@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Sap
   itemSprite: {fileID: 806288455, guid: 0583ced693170af4d8cbd72b8b97cc08, type: 3}
   itemDescription: Sticky stuff that comes from a tree.
-  amount: 5
+  amount: 1

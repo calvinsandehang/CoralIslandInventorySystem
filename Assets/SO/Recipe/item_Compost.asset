@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Compost
   itemSprite: {fileID: -908488189, guid: 0583ced693170af4d8cbd72b8b97cc08, type: 3}
   itemDescription: A mixture of decayed organic material. Used to craft fertilizer.
-  amount: 5
+  amount: 1

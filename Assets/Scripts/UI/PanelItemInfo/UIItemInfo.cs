@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +20,17 @@ public class UIItemInfo : MonoBehaviour, ISubscriber
 
     private List<GameObject> activeRequirementObjects = new List<GameObject>();
 
+    [Header("Flashing VFX Settings")]
+    [SerializeField] private Image flashingImage; // Select the UI image to flash
+    [SerializeField] private Color flashingColor = Color.red; // Choose the flashing color
+    [SerializeField] private float flashingDuration = 2f; // Duration of flashing effect
+    [SerializeField] private float flashingFrequency = 0.3f; // Frequency of flashing
+
+    private Coroutine flashingCoroutine;
+    private Color originalColor;
+
+    private CraftingRecipeSO recipeSO;
+
     private void Start()
     {
         ResetUI();
@@ -31,6 +45,10 @@ public class UIItemInfo : MonoBehaviour, ISubscriber
 
     public void Initialize(CraftingRecipeSO recipeSO)
     {
+        this.recipeSO = recipeSO;
+
+        StopFlashingEffect(); // Ensure any flashing effect is stopped before initializing
+
         if (recipeSO == null || !recipeSO.IsDiscovered)
         {
             ResetUI();
@@ -130,14 +148,77 @@ public class UIItemInfo : MonoBehaviour, ISubscriber
                 toggledObjects[i].SetActive(isActive);
         }
     }
-
+    #region Event
     public void Subscribe()
     {
         CoralIslandEvent.OnRecipeChosen += Initialize;
+        CoralIslandEvent.OnTryCraft += TryCraft;
     }
 
     public void Unsubscribe()
     {
         CoralIslandEvent.OnRecipeChosen -= Initialize;
+        CoralIslandEvent.OnTryCraft -= TryCraft;
     }
+
+    private void TryCraft()
+    {
+        if (!recipeSO.IsCraftable)
+        {
+            VfxFlashingRed();
+        }
+    }
+    #endregion
+
+    #region Vfx
+    [Button]
+    private void VfxFlashingRed()
+    {
+        if (flashingImage == null)
+        {
+            Debug.LogError("[UIItemInfo] Flashing Image is not assigned!");
+            return;
+        }
+
+        if (flashingCoroutine != null)
+        {
+            StopCoroutine(flashingCoroutine);
+        }
+
+        originalColor = flashingImage.color;
+        flashingCoroutine = StartCoroutine(FlashingEffectCoroutine());
+    }
+
+    private IEnumerator FlashingEffectCoroutine()
+    {
+        float elapsedTime = 0f;
+        bool isFlashing = false;
+
+        while (elapsedTime < flashingDuration)
+        {
+            flashingImage.color = isFlashing ? originalColor : flashingColor;
+            isFlashing = !isFlashing;
+            elapsedTime += flashingFrequency;
+
+            yield return new WaitForSeconds(flashingFrequency);
+        }
+
+        // Restore original color after flashing ends
+        flashingImage.color = originalColor;
+    }
+
+    public void StopFlashingEffect()
+    {
+        if (flashingCoroutine != null)
+        {
+            StopCoroutine(flashingCoroutine);
+            flashingCoroutine = null;
+
+            if (flashingImage != null)
+            {
+                flashingImage.color = originalColor; // Restore original color
+            }
+        }
+    }
+    #endregion
 }

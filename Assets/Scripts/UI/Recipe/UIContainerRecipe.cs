@@ -85,21 +85,28 @@ namespace StairwayGames.CoralIsland.UI.Recipe
         {
             base.OnButtonClicked();
             //TogglePin();
-            CoralIslandEvent.OnRecipeChosen(recipeData);
+            CoralIslandEvent.OnTryCraft?.Invoke();
+
         }
 
         public override void OnPointerEnter(PointerEventData eventData)
         {
             base.OnPointerEnter(eventData);
             if (recipeData.IsDiscovered)
+            {
                 ShowTooltip();
+                CoralIslandEvent.OnRecipeChosen(recipeData);
+            }
+
         }
 
         public override void OnPointerExit(PointerEventData eventData)
         {
             base.OnPointerExit(eventData);
             if (recipeData.IsDiscovered)
+            {
                 HideTooltip();
+            }
         }
         #endregion
 
