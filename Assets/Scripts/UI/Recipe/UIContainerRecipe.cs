@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using StairwayGames.CoralIsland.UI.ButtonSystem;
 using UnityEngine;
@@ -8,6 +9,11 @@ namespace StairwayGames.CoralIsland.UI.Recipe
 {
     public class UIContainerRecipe : UISelectableButtonBase
     {
+        [Header("Color Status")]
+        [SerializeField] protected Color craftable = Color.white;
+        [SerializeField] protected Color uncraftable = Color.white;
+        [SerializeField] protected Color notDiscovered = Color.white;
+
         [Header("State Images")]
         [SerializeField] private Image undiscoveredImage;
         [SerializeField] private Image discoveredImage;
@@ -36,6 +42,22 @@ namespace StairwayGames.CoralIsland.UI.Recipe
 
             // Default pin state
             pinIconObject.SetActive(false);
+
+            SetColorStatus();
+        }
+
+        private void SetColorStatus()
+        {
+            if (recipeData.IsCraftable)
+                buttonVisual.color = craftable;
+            else if (!recipeData.IsCraftable && recipeData.IsDiscovered)
+            {
+                buttonVisual.color = uncraftable;
+            }
+            else
+            {
+                buttonVisual.color = notDiscovered;
+            }
         }
 
         /// <summary>
@@ -47,13 +69,23 @@ namespace StairwayGames.CoralIsland.UI.Recipe
             pinIconObject.SetActive(!isPinned);
         }
 
+        #region Vfx
+        public override void ToggleHoveredVfx()
+        {
+            if (!recipeData.IsDiscovered) return;
+
+            base.ToggleHoveredVfx();
+        }
+        #endregion
+        #region Event
         /// <summary>
         /// Called when the button is clicked.
         /// </summary>
         protected override void OnButtonClicked()
         {
             base.OnButtonClicked();
-            TogglePin();
+            //TogglePin();
+            CoralIslandEvent.OnRecipeChosen(recipeData);
         }
 
         public override void OnPointerEnter(PointerEventData eventData)
@@ -69,6 +101,8 @@ namespace StairwayGames.CoralIsland.UI.Recipe
             if (recipeData.IsDiscovered)
                 HideTooltip();
         }
+        #endregion
+
         #region Popup
         [SerializeField] private Transform popupTargetTransform; // Target UI element
 

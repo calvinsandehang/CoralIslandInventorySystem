@@ -178,6 +178,9 @@ MonoBehaviour:
   buttonName: Townhall
   tmpButtonName: {fileID: 3107764034747947293}
   panelButtonName: {fileID: 9048644132906629390}
+  offsetX: 100
+  offsetY: -60
+  popupTargetTransform: {fileID: 4170092214064698304}
   moveUpDistance: 25
   animationDuration: 0.25
   moveUpEaseType: 1
@@ -296,7 +299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5151287118711555382
 RectTransform:
   m_ObjectHideFlags: 0
@@ -738,7 +741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8121201408470997063
 RectTransform:
   m_ObjectHideFlags: 0

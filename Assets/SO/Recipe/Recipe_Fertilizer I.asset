@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fcd0bfc67b195cb4586258447e710d66, type: 3}
-  m_Name: Recipe_MakeshiftChest
+  m_Name: Recipe_Fertilizer I
   m_EditorClassIdentifier: 
-  itemName: Makeshift chest
-  itemSprite: {fileID: 1100963768, guid: 6411b12293432a549a16014cd55eeb82, type: 3}
-  itemDescription: Storage for all kinds of items. Can hold up to 20 objects.
+  itemName: Fertilizer I
+  itemSprite: {fileID: -1202164523, guid: 6411b12293432a549a16014cd55eeb82, type: 3}
+  itemDescription: A chance to grow better quality crops if mixed with soil.
   amount: 0
   category: 0
   itemRequirements:
-  - Item: {fileID: 11400000, guid: 3e18440908c65ca4cbd5c177c14aa491, type: 2}
-    AmountNeeded: 25
-  - Item: {fileID: 11400000, guid: f2646e3b57b75ee4d9ceee193aba8fe7, type: 2}
-    AmountNeeded: 10
+  - Item: {fileID: 11400000, guid: f75030acc17324b42a37d49f81ad7a3c, type: 2}
+    AmountNeeded: 2
+  - Item: {fileID: 11400000, guid: 7e799dc407280d54f86fd98d12813a37, type: 2}
+    AmountNeeded: 1
   undiscoveredSprite: {fileID: 21300000, guid: f2b62771849b945c19db9d3747441d14, type: 3}
-  isCraftable: 1
+  isCraftable: 0
   isDiscovered: 1

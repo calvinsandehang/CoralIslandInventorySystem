@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class CraftingRecipeSO : ItemSO
     [SerializeField] private RecipeCategory category;
 
     [Header("Crafting Requirements")]
-    [SerializeField] private List<ItemSO> itemRequirements = new List<ItemSO>();
+    [SerializeField] private List<ItemRequirement> itemRequirements = new List<ItemRequirement>();
 
     [Header("Visuals")]
     [SerializeField] private Sprite undiscoveredSprite;
@@ -19,8 +20,15 @@ public class CraftingRecipeSO : ItemSO
 
     // Public Properties
     public RecipeCategory Category => category;
-    public List<ItemSO> ItemRequirements => itemRequirements;
+    public List<ItemRequirement> ItemRequirements => itemRequirements;
     public Sprite UndiscoveredSprite => undiscoveredSprite;
     public bool IsCraftable => isCraftable;
     public bool IsDiscovered => isDiscovered;
+}
+
+[Serializable]
+public class ItemRequirement
+{
+    public ItemSO Item;
+    public int AmountNeeded;
 }

@@ -17,6 +17,6 @@ MonoBehaviour:
   itemDescription: 
   category: 1
   itemRequirements: []
-  undiscoveredSprite: {fileID: 21300000, guid: 92aa5361c7a114ca99e4564810f88214, type: 3}
+  undiscoveredSprite: {fileID: 1601466424, guid: d5c77e25cbceb4a43bc3e6f46f57ea64, type: 3}
   isCraftable: 0
   isDiscovered: 0

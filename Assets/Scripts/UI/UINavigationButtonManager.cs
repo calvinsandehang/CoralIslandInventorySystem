@@ -57,5 +57,12 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
             int newIndex = (currentIndex + 1) % navigationButtons.Count;
             SelectButton(navigationButtons[newIndex]);
         }
+
+        internal bool CheckActiveButton(UINavigationButtonBase uINavigationButtonBase)
+        {
+            if (uINavigationButtonBase == selectedButton) return true;
+
+            return false;
+        }
     }
 }

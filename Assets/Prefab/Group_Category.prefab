@@ -617,6 +617,9 @@ MonoBehaviour:
   buttonName: All
   tmpButtonName: {fileID: 7702065103592649622}
   panelButtonName: {fileID: 6656895350512765596}
+  offsetX: 150
+  offsetY: -40
+  popupTargetTransform: {fileID: 338564565814228891}
   recipeCategory: 0
 --- !u!114 &756419652652615891
 MonoBehaviour:

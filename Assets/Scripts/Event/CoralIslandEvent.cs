@@ -10,4 +10,5 @@ public static class CoralIslandEvent
     public static Action<AudioClip> OnStopSfx;
 
     public static Action<RecipeCategory> OnChangeRecipeCategory;
+    public static Action<CraftingRecipeSO> OnRecipeChosen;
 }

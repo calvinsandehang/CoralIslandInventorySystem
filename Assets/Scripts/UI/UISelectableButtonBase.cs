@@ -47,7 +47,7 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
                 buttonVisual = GetComponent<Image>();
             }
 
-            buttonVisual.color = normalColor;
+            //buttonVisual.color = normalColor;
 
 
             UIHelper.SetImageAlpha(frame, 0f);
@@ -68,7 +68,7 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
             {
                 PlayHoverSfx();
                 ToggleHoveredVfx();
-                ToggleButtonPopUpInfo();
+                //ToggleButtonPopUpInfo();
             }
         }
 
@@ -78,7 +78,7 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
             if (!IsSelected)
             {
                 ToggleHoveredVfx();
-                ToggleButtonPopUpInfo();
+                //ToggleButtonPopUpInfo();
             }
         }
 
@@ -99,7 +99,7 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
         {
             IsHovered = false;
             ToggleHoveredVfx();
-            ToggleButtonPopUpInfo();
+            //ToggleButtonPopUpInfo();
 
             PlayClickPositiveSfx();
             IsSelected = true;
@@ -110,7 +110,7 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
         public virtual void DeselectButton()
         {
             IsSelected = false;
-            buttonVisual.color = normalColor;
+            //buttonVisual.color = normalColor;
             ToggleSelectedVfx();
         }
 
