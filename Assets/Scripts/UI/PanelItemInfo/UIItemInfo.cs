@@ -162,12 +162,19 @@ public class UIItemInfo : MonoBehaviour, ISubscriber
         CoralIslandEvent.OnTryCraft -= TryCraft;
     }
 
-    private void TryCraft()
+    private void TryCraft(CraftingRecipeSO recipeSO)
     {
+        if (!recipeSO.IsDiscovered) return;
+
         if (!recipeSO.IsCraftable)
         {
             VfxFlashingRed();
             CoralIslandEvent.OnFailCraft?.Invoke();
+            AudioSystemManager.Instance.PlaySfx(AudioDatabaseType.Gameplay, "SfxUI3", 1f);
+        }
+        else
+        {
+            AudioSystemManager.Instance.PlaySfx(AudioDatabaseType.Gameplay, "SfxUI2", 1f);
         }
     }
     #endregion

@@ -61,7 +61,7 @@ namespace StairwayGames.CoralIsland.UI.Recipe
         }
 
         /// <summary>
-        /// Toggles the pin state.
+        /// Toggles the pin state when the middle mouse button is clicked.
         /// </summary>
         public void TogglePin()
         {
@@ -77,15 +77,30 @@ namespace StairwayGames.CoralIsland.UI.Recipe
             base.ToggleHoveredVfx();
         }
         #endregion
+
         #region Event
         /// <summary>
         /// Called when the button is clicked.
+        /// Now only toggles pin when the middle mouse button is clicked.
         /// </summary>
         protected override void OnButtonClicked()
         {
             base.OnButtonClicked();
-            //TogglePin();
-            CoralIslandEvent.OnTryCraft?.Invoke();
+            CoralIslandEvent.OnTryCraft?.Invoke(recipeData);
+        }
+
+        /// <summary>
+        /// Detects middle mouse click and toggles the pin.
+        /// </summary>
+        public override void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Middle)
+            {
+                TogglePin();
+                return;
+            }
+            base.OnPointerClick(eventData);
+
 
         }
 
@@ -95,9 +110,9 @@ namespace StairwayGames.CoralIsland.UI.Recipe
             if (recipeData.IsDiscovered)
             {
                 ShowTooltip();
-                CoralIslandEvent.OnRecipeChosen(recipeData);
             }
 
+            CoralIslandEvent.OnRecipeChosen(recipeData);
         }
 
         public override void OnPointerExit(PointerEventData eventData)
@@ -158,6 +173,5 @@ namespace StairwayGames.CoralIsland.UI.Recipe
             currentPopup = null;
         }
         #endregion
-
     }
 }

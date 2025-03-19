@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b826d378603f02b44abceec30e055498, type: 3}
-  m_Name: SOFloat_BGMVolume
+  m_Script: {fileID: 11500000, guid: 8584b9a21cfafd342b063ce24a81b67d, type: 3}
+  m_Name: AudioData_Sfx_UI_CannotCraft
   m_EditorClassIdentifier: 
-  Value: 1
+  Name: SfxUI3
+  Clip: {fileID: 8300000, guid: d86e1afc156e6ef41820e8ff32ce9cc4, type: 3}

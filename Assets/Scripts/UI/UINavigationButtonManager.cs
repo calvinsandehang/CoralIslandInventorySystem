@@ -13,7 +13,7 @@ namespace StairwayGames.CoralIsland.UI.ButtonSystem
         private UISelectableButtonBase selectedButton;
         [SerializeField] private int initialIndex = 0;
         private int currentIndex = 0;
-        [SerializeField] private float fadeDuration = 0.5f; // Duration for smooth transitions
+        [SerializeField] private float fadeDuration = 0.25f; // Duration for smooth transitions
 
         private void Start()
         {

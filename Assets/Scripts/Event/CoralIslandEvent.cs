@@ -12,7 +12,7 @@ public static class CoralIslandEvent
 
     public static Action<RecipeCategory> OnChangeRecipeCategory;
     public static Action<CraftingRecipeSO> OnRecipeChosen;
-    public static Action OnTryCraft;
+    public static Action<CraftingRecipeSO> OnTryCraft;
     public static Action OnFailCraft;
 }
 
